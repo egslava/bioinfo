@@ -29,6 +29,74 @@ infix fun String.hamming(other: String): Int {
 }
 
 /**
+ *
+ * That function implements Dynamic Programming algorithm for searching the longest commons substring.
+ * https://en.wikipedia.org/wiki/Longest_common_substring_problem
+ *
+ * If this String = "string_stirling" and
+ * @param other "substring"
+ * @return "string"
+ * @return null if no solution was found
+ *
+ */
+infix fun String.longestCommonSubstring(other: String): String?{
+
+
+    if (this.isEmpty() || other.isEmpty()) return null
+
+    val short: String  // short then long
+    val long: String  // long then short
+
+    if (length > other.length){
+        short = other
+        long = this
+    } else {
+        short = this
+        long = other
+    }
+
+    var lastGen = IntArray(short.length)
+    var nextGen = IntArray(short.length)
+    fun swapGens() {
+        var forSwap: IntArray = lastGen
+        lastGen = nextGen
+        nextGen = forSwap
+    }
+
+    var maxLength = 0
+    var maxIndexEnd = 0
+    long.forEachIndexed { longIndex, longChar ->
+        short.forEachIndexed { shortIndex, shortChar ->
+            if (longChar != shortChar) {
+                nextGen[shortIndex] = 0
+                return@forEachIndexed
+            }
+
+            val currentLength =
+                    if (shortIndex >= 1)
+                        lastGen[shortIndex - 1] + 1
+                    else 1
+            nextGen[shortIndex] = currentLength
+
+            if (currentLength > maxLength) {
+                maxLength = currentLength
+                maxIndexEnd = shortIndex
+            }
+        }
+
+        swapGens()
+    }
+
+    if (maxLength == 0) {
+        return null
+    } else {
+        return short.substring(maxIndexEnd + 1 - maxLength, maxIndexEnd + 1)
+    }
+
+
+}
+
+/**
  * https://en.wikipedia.org/wiki/Hamming_distance
  * Strings should have the same length!
  * */

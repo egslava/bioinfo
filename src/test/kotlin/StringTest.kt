@@ -1,4 +1,5 @@
 import common.hamming
+import common.longestCommonSubstring
 import common.split
 import common.split2
 import org.junit.Assert
@@ -32,7 +33,11 @@ class StringTest {
     }
 
     @Test fun longestCommonString(){
-//        assertEquals()
+        assertEquals( "bo", "about" longestCommonSubstring "boat" )
+        assertEquals( "12345", "0123450" longestCommonSubstring "_12345_" )
+        assertEquals( null, "cat" longestCommonSubstring "dog" )
+        assertEquals( null, "" longestCommonSubstring "dog" )
+        assertEquals( null, "cat" longestCommonSubstring "" )
     }
 
     @Test fun splitByCount(){
