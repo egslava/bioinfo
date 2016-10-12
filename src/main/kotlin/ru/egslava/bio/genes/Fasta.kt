@@ -1,4 +1,4 @@
-package common
+package ru.egslava.bio.genes
 
 import java.util.*
 

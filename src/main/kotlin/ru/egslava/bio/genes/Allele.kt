@@ -1,4 +1,4 @@
-package common.genes
+package ru.egslava.bio.genes
 
 /**
  * Created by egslava on 31/08/16.

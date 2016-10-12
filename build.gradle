@@ -1,27 +1,49 @@
-group 'ru.egslava'
-version '1.0-SNAPSHOT'
-
 buildscript {
     ext.kotlin_version = '1.0.3'
     repositories {
         mavenCentral()
+        jcenter()
+//        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2-1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.3.1"
     }
+
+}
+
+plugins {
+    id 'java'
+    id 'me.champeau.gradle.jmh' version "0.3.1"
 }
 
 apply plugin: 'kotlin'
 
+jmh {
+    benchmarkMode = ['all']
+    duplicateClassesStrategy = 'warn'
+    resultFormat = 'TEXT'   // Result format type (one of CSV, JSON, NONE, SCSV, TEXT)
+    timeUnit = 'ms' // Output time unit. Available time units are: [m, s, ms, us, ns].
+    verbosity = 'EXTRA' // Verbosity mode. Available modes are: [SILENT, NORMAL, EXTRA]
+//    warmup = '1s' // Time to spend at each warmup iteration.
+    forceGC = true
+    fork = 10 // How many times to forks a single benchmark. Use 0 to disable forking altogether
+    threads = 1 // Number of worker threads to run with.
+
+}
+
+//group 'ru.egslava'
+//version '1.0-SNAPSHOT'
+
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
 repositories {
+//    maven { url "https://plugins.gradle.org/m2/" }
+    jcenter()
     mavenCentral()
 }
 sourceSets {
